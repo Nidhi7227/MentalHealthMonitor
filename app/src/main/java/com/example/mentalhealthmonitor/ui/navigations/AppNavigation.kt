@@ -5,7 +5,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.m.ui.screens.EmergencyAlertPreviewScreen
-
 import com.example.mentalhealthmonitor.ui.screens.*
 
 @Composable
@@ -21,7 +20,9 @@ fun AppNavigation() {
         composable(Screen.Splash.route) {
             SplashScreen {
                 navController.navigate(Screen.Home.route) {
-                    popUpTo(Screen.Splash.route) { inclusive = true }
+                    popUpTo(Screen.Splash.route) {
+                        this.inclusive = true
+                    }
                 }
             }
         }
@@ -30,6 +31,21 @@ fun AppNavigation() {
             HomeScreen(
                 onBreathingClick = {
                     navController.navigate(Screen.Calm.route)
+                },
+                onDashboardClick = {
+                    navController.navigate(Screen.Dashboard.route)
+                },
+                onInsightClick = {
+                    navController.navigate(Screen.Insight.route)
+                },
+                onProgressClick = {
+                    navController.navigate(Screen.Progress.route)
+                },
+                onTrustedPersonClick = {
+                    navController.navigate(Screen.TrustedPerson.route)
+                },
+                onEmergencyClick = {
+                    navController.navigate(Screen.EmergencyPreview.route)
                 }
             )
         }
@@ -37,7 +53,7 @@ fun AppNavigation() {
 
         composable(Screen.Dashboard.route) {
             HomeDashboardScreen(
-                onBreathingClick = TODO()
+                onBreathingClick = { navController.navigate(Screen.Calm.route) }
             )
         }
 
@@ -46,7 +62,7 @@ fun AppNavigation() {
         }
 
         composable(Screen.Calm.route) {
-            BreathingScreen() //
+            BreathingScreen()
         }
 
         composable(Screen.Progress.route) {

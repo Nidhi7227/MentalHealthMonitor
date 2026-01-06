@@ -109,3 +109,40 @@ fun CalmCard(title: String, description: String) {
         }
     }
 }
+@Composable
+fun HomeScreen(
+    onBreathingClick: () -> Unit,
+    onDashboardClick: () -> Unit,
+    onInsightClick: () -> Unit,
+    onProgressClick: () -> Unit,
+    onTrustedPersonClick: () -> Unit,
+    onEmergencyClick: () -> Unit
+) {
+
+    Column {
+
+        Button(onClick = onBreathingClick) {
+            Text("Breathing / Calm")
+        }
+
+        Button(onClick = onDashboardClick) {
+            Text("Dashboard")
+        }
+
+        Button(onClick = onInsightClick) {
+            Text("Insights")
+        }
+
+        Button(onClick = onProgressClick) {
+            Text("Progress")
+        }
+
+        Button(onClick = onTrustedPersonClick) {
+            Text("Trusted Person")
+        }
+
+        Button(onClick = onEmergencyClick) {
+            Text("Emergency Preview")
+        }
+    }
+}
