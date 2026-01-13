@@ -1,80 +1,51 @@
 package com.example.mentalhealthmonitor.ui.navigations
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.m.ui.screens.EmergencyAlertPreviewScreen
-import com.example.mentalhealthmonitor.ui.screens.*
+import com.example.mentalhealthmonitor.ui.screens.MainScreen
+import com.example.mentalhealthmonitor.ui.screens.SplashScreen
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
 
+    // 🌱 App-level states (shared across screens)
+    var isDarkTheme by remember { mutableStateOf(false) }
+    var language by remember { mutableStateOf("English") }
+    var trustedName by remember { mutableStateOf("") }
+    var trustedPhone by remember { mutableStateOf("") }
+
     NavHost(
         navController = navController,
         startDestination = Screen.Splash.route
     ) {
 
+        // 🌅 Splash Screen
         composable(Screen.Splash.route) {
             SplashScreen {
-                navController.navigate(Screen.Home.route) {
+                navController.navigate(Screen.Main.route) {
                     popUpTo(Screen.Splash.route) {
-                        this.inclusive = true
+                        inclusive = true
                     }
                 }
             }
         }
 
-        composable(Screen.Home.route) {
-            HomeScreen(
-                onBreathingClick = {
-                    navController.navigate(Screen.Calm.route)
-                },
-                onDashboardClick = {
-                    navController.navigate(Screen.Dashboard.route)
-                },
-                onInsightClick = {
-                    navController.navigate(Screen.Insight.route)
-                },
-                onProgressClick = {
-                    navController.navigate(Screen.Progress.route)
-                },
-                onTrustedPersonClick = {
-                    navController.navigate(Screen.TrustedPerson.route)
-                },
-                onEmergencyClick = {
-                    navController.navigate(Screen.EmergencyPreview.route)
-                }
+        // 🏠 Main App
+        composable(Screen.Main.route) {
+            MainScreen(
+                isDarkTheme = isDarkTheme,
+                onThemeChange = { isDarkTheme = it },
+                language = language,
+                onLanguageChange = { language = it },
+                trustedName = trustedName,
+                onTrustedNameChange = { trustedName = it },
+                trustedPhone = trustedPhone,
+                onTrustedPhoneChange = { trustedPhone = it }
             )
-        }
-
-
-        composable(Screen.Dashboard.route) {
-            HomeDashboardScreen(
-                onBreathingClick = { navController.navigate(Screen.Calm.route) }
-            )
-        }
-
-        composable(Screen.Insight.route) {
-            ExplainableInsightScreen()
-        }
-
-        composable(Screen.Calm.route) {
-            BreathingScreen()
-        }
-
-        composable(Screen.Progress.route) {
-            ProgressScreen()
-        }
-
-        composable(Screen.TrustedPerson.route) {
-            TrustedPersonSetupScreen()
-        }
-
-        composable(Screen.EmergencyPreview.route) {
-            EmergencyAlertPreviewScreen()
         }
     }
 }
